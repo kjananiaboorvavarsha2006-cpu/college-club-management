@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - College Club Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="animated-bg">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-indigo-600 font-bold text-xl">College Club Management</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="clubs.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Clubs
+                        </a>
+                        <a href="events.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Events
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div class="ml-3 relative">
+                        <div>
+                            <button id="user-menu-button" type="button" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full" src="https://picsum.photos/seed/user123/40/40.jpg" alt="User profile">
+                            </button>
+                        </div>
+                        <div id="user-menu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+                            <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="dashboard.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
+                <a href="clubs.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Clubs</a>
+                <a href="events.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Events</a>
+                <a href="profile.html" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Profile</a>
+                <a href="#" id="logout-btn-mobile" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Sign out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+                <!-- Left Column - Profile Info -->
+                <div class="md:col-span-1">
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                        <div class="px-4 py-5 sm:px-6">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Profile Information</h3>
+                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and information.</p>
+                        </div>
+                        <div class="border-t border-gray-200">
+                            <dl id="profile-info">
+                                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Full name</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" id="profile-name">Loading...</dd>
+                                </div>
+                                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Email address</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" id="profile-email">Loading...</dd>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Student ID</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" id="profile-student-id">Loading...</dd>
+                                </div>
+                                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Major</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" id="profile-major">Loading...</dd>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Member since</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" id="profile-member-since">Loading...</dd>
+                                </div>
+                            </dl>
+                        </div>
+                        <div class="px-4 py-5 sm:px-6">
+                            <button id="edit-profile-btn" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <i class="fas fa-edit -ml-1 mr-2 h-5 w-5"></i>
+                                Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Stats and Badges -->
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <!-- Stats Section -->
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6 slide-up">
+                        <div class="px-4 py-5 sm:px-6">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Activity Stats</h3>
+                        </div>
+                        <div class="border-t border-gray-200">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                                    <div class="bg-gray-50 overflow-hidden shadow rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 bg-indigo-100 rounded-md p-3">
+                                                    <i class="fas fa-users text-indigo-600"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="text-sm font-medium text-gray-500 truncate">Clubs Joined</dt>
+                                                        <dd class="text-lg font-semibold text-gray-900" id="clubs-joined-count">0</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 overflow-hidden shadow rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 bg-green-100 rounded-md p-3">
+                                                    <i class="fas fa-calendar-check text-green-600"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="text-sm font-medium text-gray-500 truncate">Events Attended</dt>
+                                                        <dd class="text-lg font-semibold text-gray-900" id="events-attended-count">0</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 overflow-hidden shadow rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 bg-yellow-100 rounded-md p-3">
+                                                    <i class="fas fa-fire text-yellow-600"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="text-sm font-medium text-gray-500 truncate">Current Streak</dt>
+                                                        <dd class="text-lg font-semibold text-gray-900" id="current-streak">0</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 overflow-hidden shadow rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 bg-purple-100 rounded-md p-3">
+                                                    <i class="fas fa-trophy text-purple-600"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="text-sm font-medium text-gray-500 truncate">Badges Earned</dt>
+                                                        <dd class="text-lg font-semibold text-gray-900" id="badges-earned-count">0</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badges Section -->
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg slide-up">
+                        <div class="px-4 py-5 sm:px-6">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Badges</h3>
+                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Earn badges for your activity and engagement.</p>
+                        </div>
+                        <div class="border-t border-gray-200">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div id="badges-container" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                                    <!-- Badges will be dynamically added here -->
+                                    <div class="text-center">
+                                        <i class="fas fa-spinner fa-spin text-indigo-600 text-3xl mb-2"></i>
+                                        <p class="text-sm text-gray-600">Loading badges...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity Section -->
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg mt-6 slide-up">
+                        <div class="px-4 py-5 sm:px-6">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Activity</h3>
+                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Your latest activities on the platform.</p>
+                        </div>
+                        <div class="border-t border-gray-200">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div id="activity-container">
+                                    <div class="text-center py-8">
+                                        <i class="fas fa-spinner fa-spin text-indigo-600 text-3xl mb-3"></i>
+                                        <p class="text-gray-600">Loading activity...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <form id="edit-profile-form">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Edit Profile
+                                </h3>
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="edit-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                        <input type="text" id="edit-name" name="name" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="edit-email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                        <input type="email" id="edit-email" name="email" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="edit-student-id" class="block text-sm font-medium text-gray-700">Student ID</label>
+                                        <input type="text" id="edit-student-id" name="studentId" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="edit-major" class="block text-sm font-medium text-gray-700">Major</label>
+                                        <input type="text" id="edit-major" name="major" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Save Changes
+                        </button>
+                        <button type="button" id="cancel-edit-profile" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Setup mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Setup user menu toggle
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            
+            userMenuButton.addEventListener('click', function() {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Close menus when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+                
+                if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+            
+            // Setup logout buttons
+            document.getElementById('logout-btn').addEventListener('click', logout);
+            document.getElementById('logout-btn-mobile').addEventListener('click', logout);
+            
+            function logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+            
+            // Setup edit profile modal
+            const editProfileBtn = document.getElementById('edit-profile-btn');
+            const editProfileModal = document.getElementById('edit-profile-modal');
+            const cancelEditProfile = document.getElementById('cancel-edit-profile');
+            const editProfileForm = document.getElementById('edit-profile-form');
+            
+            editProfileBtn.addEventListener('click', async function() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    // Get current profile data
+                    const response = await axios.get('/api/profile');
+                    const profileData = response.data;
+                    
+                    // Populate form with current data
+                    document.getElementById('edit-name').value = profileData.name;
+                    document.getElementById('edit-email').value = profileData.email;
+                    document.getElementById('edit-student-id').value = profileData.studentId;
+                    document.getElementById('edit-major').value = profileData.major;
+                    
+                    editProfileModal.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Error loading profile data:', error);
+                    showNotification('Failed to load profile data. Please try again.', 'error');
+                }
+            });
+            
+            cancelEditProfile.addEventListener('click', function() {
+                editProfileModal.classList.add('hidden');
+                editProfileForm.reset();
+            });
+            
+            // Handle edit profile form submission
+            editProfileForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const profileData = {
+                    name: document.getElementById('edit-name').value,
+                    email: document.getElementById('edit-email').value,
+                    studentId: document.getElementById('edit-student-id').value,
+                    major: document.getElementById('edit-major').value
+                };
+                
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.put('/api/profile/update', profileData);
+                    
+                    // Close modal and reset form
+                    editProfileModal.classList.add('hidden');
+                    editProfileForm.reset();
+                    
+                    // Update user in localStorage
+                    localStorage.setItem('user', JSON.stringify(response.data.user));
+                    
+                    // Reload profile data
+                    loadProfileData();
+                    
+                    // Show success notification
+                    showNotification('Profile updated successfully!', 'success');
+                    
+                } catch (error) {
+                    const message = error.response && error.response.data && error.response.data.message 
+                        ? error.response.data.message 
+                        : 'Failed to update profile. Please try again.';
+                    showNotification(message, 'error');
+                }
+            });
+            
+            // Load profile data
+            loadProfileData();
+            
+            async function loadProfileData() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.get('/api/profile');
+                    const profileData = response.data;
+                    
+                    // Update profile info
+                    document.getElementById('profile-name').textContent = profileData.name;
+                    document.getElementById('profile-email').textContent = profileData.email;
+                    document.getElementById('profile-student-id').textContent = profileData.studentId;
+                    document.getElementById('profile-major').textContent = profileData.major;
+                    document.getElementById('profile-member-since').textContent = new Date(profileData.createdAt).toLocaleDateString();
+                    
+                    // Update stats
+                    document.getElementById('clubs-joined-count').textContent = profileData.clubsCount || 0;
+                    document.getElementById('events-attended-count').textContent = profileData.eventsCount || 0;
+                    document.getElementById('current-streak').textContent = profileData.currentStreak || 0;
+                    document.getElementById('badges-earned-count').textContent = profileData.badgesCount || 0;
+                    
+                    // Load badges
+                    loadBadges(profileData.badges || []);
+                    
+                    // Load activity
+                    loadActivity(profileData.activity || []);
+                    
+                } catch (error) {
+                    console.error('Error loading profile data:', error);
+                    
+                    // If unauthorized, redirect to login
+                    if (error.response && error.response.status === 401) {
+                        logout();
+                    } else {
+                        showNotification('Failed to load profile data. Please try again.', 'error');
+                    }
+                }
+            }
+            
+            function loadBadges(badges) {
+                const badgesContainer = document.getElementById('badges-container');
+                
+                if (badges.length === 0) {
+                    badgesContainer.innerHTML = `
+                        <div class="col-span-full text-center">
+                            <i class="fas fa-trophy text-gray-400 text-3xl mb-2"></i>
+                            <p class="text-sm text-gray-600">No badges earned yet. Keep participating to earn badges!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                badgesContainer.innerHTML = '';
+                
+                // Define all possible badges
+                const allBadges = [
+                    { id: 'bronze', name: 'Bronze', icon: 'fa-medal', color: 'text-yellow-700', bgColor: 'bg-yellow-100', description: '3-day streak' },
+                    { id: 'silver', name: 'Silver', icon: 'fa-medal', color: 'text-gray-500', bgColor: 'bg-gray-100', description: '7-day streak' },
+                    { id: 'gold', name: 'Gold', icon: 'fa-medal', color: 'text-yellow-500', bgColor: 'bg-yellow-100', description: '15-day streak' },
+                    { id: 'diamond', name: 'Diamond', icon: 'fa-gem', color: 'text-blue-400', bgColor: 'bg-blue-100', description: '30-day streak' },
+                    { id: 'club-joiner', name: 'Club Joiner', icon: 'fa-users', color: 'text-indigo-600', bgColor: 'bg-indigo-100', description: 'Joined 5 clubs' },
+                    { id: 'event-goer', name: 'Event Goer', icon: 'fa-calendar-check', color: 'text-green-600', bgColor: 'bg-green-100', description: 'Attended 10 events' }
+                ];
+                
+                // Display badges
+                allBadges.forEach(badge => {
+                    const isEarned = badges.some(userBadge => userBadge.type === badge.id);
+                    
+                    const badgeElement = document.createElement('div');
+                    badgeElement.className = 'text-center';
+                    badgeElement.innerHTML = `
+                        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full ${isEarned ? badge.bgColor : 'bg-gray-100'} ${isEarned ? '' : 'opacity-50'}">
+                            <i class="fas ${badge.icon} ${isEarned ? badge.color : 'text-gray-400'} text-2xl"></i>
+                        </div>
+                        <p class="mt-2 text-sm font-medium text-gray-900">${badge.name}</p>
+                        <p class="text-xs text-gray-500">${badge.description}</p>
+                        ${isEarned ? '<p class="mt-1 text-xs text-green-600 font-medium">Earned!</p>' : '<p class="mt-1 text-xs text-gray-400">Not earned</p>'}
+                    `;
+                    
+                    badgesContainer.appendChild(badgeElement);
+                });
+            }
+            
+            function loadActivity(activity) {
+                const activityContainer = document.getElementById('activity-container');
+                
+                if (activity.length === 0) {
+                    activityContainer.innerHTML = `
+                        <div class="text-center py-8">
+                            <i class="fas fa-history text-gray-400 text-3xl mb-3"></i>
+                            <p class="text-gray-600">No recent activity. Join clubs or events to see activity here.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                activityContainer.innerHTML = `
+                    <ul class="divide-y divide-gray-200">
+                        ${activity.slice(0, 10).map(item => {
+                            const activityDate = new Date(item.date);
+                            const formattedDate = activityDate.toLocaleDateString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                            
+                            let icon = '';
+                            let color = '';
+                            
+                            switch(item.type) {
+                                case 'joined_club':
+                                    icon = 'fa-user-plus';
+                                    color = 'text-green-600';
+                                    break;
+                                case 'left_club':
+                                    icon = 'fa-user-minus';
+                                    color = 'text-red-600';
+                                    break;
+                                case 'joined_event':
+                                    icon = 'fa-calendar-check';
+                                    color = 'text-blue-600';
+                                    break;
+                                case 'earned_badge':
+                                    icon = 'fa-trophy';
+                                    color = 'text-yellow-600';
+                                    break;
+                                default:
+                                    icon = 'fa-circle';
+                                    color = 'text-gray-600';
+                            }
+                            
+                            return `
+                                <li class="px-4 py-4 sm:px-6">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas ${icon} ${color}"></i>
+                                        </div>
+                                        <div class="min-w-0 flex-1 ml-3">
+                                            <p class="text-sm font-medium text-gray-900">${item.description}</p>
+                                            <p class="mt-1 text-sm text-gray-500">${formattedDate}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            `;
+                        }).join('')}
+                    </ul>
+                `;
+                
+                if (activity.length > 10) {
+                    activityContainer.innerHTML += `
+                        <div class="px-4 py-3 sm:px-6 text-center">
+                            <button id="view-all-activity" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                View all activity
+                            </button>
+                        </div>
+                    `;
+                    
+                    document.getElementById('view-all-activity').addEventListener('click', function() {
+                        activityContainer.innerHTML = `
+                            <ul class="divide-y divide-gray-200">
+                                ${activity.map(item => {
+                                    const activityDate = new Date(item.date);
+                                    const formattedDate = activityDate.toLocaleDateString('en-US', { 
+                                        month: 'short', 
+                                        day: 'numeric',
+                                        year: 'numeric'
+                                    });
+                                    
+                                    let icon = '';
+                                    let color = '';
+                                    
+                                    switch(item.type) {
+                                        case 'joined_club':
+                                            icon = 'fa-user-plus';
+                                            color = 'text-green-600';
+                                            break;
+                                        case 'left_club':
+                                            icon = 'fa-user-minus';
+                                            color = 'text-red-600';
+                                            break;
+                                        case 'joined_event':
+                                            icon = 'fa-calendar-check';
+                                            color = 'text-blue-600';
+                                            break;
+                                        case 'earned_badge':
+                                            icon = 'fa-trophy';
+                                            color = 'text-yellow-600';
+                                            break;
+                                        default:
+                                            icon = 'fa-circle';
+                                            color = 'text-gray-600';
+                                    }
+                                    
+                                    return `
+                                        <li class="px-4 py-4 sm:px-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas ${icon} ${color}"></i>
+                                                </div>
+                                                <div class="min-w-0 flex-1 ml-3">
+                                                    <p class="text-sm font-medium text-gray-900">${item.description}</p>
+                                                    <p class="mt-1 text-sm text-gray-500">${formattedDate}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    `;
+                                }).join('')}
+                            </ul>
+                            <div class="px-4 py-3 sm:px-6 text-center">
+                                <button id="view-recent-activity" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                    Show recent activity
+                                </button>
+                            </div>
+                        `;
+                        
+                        document.getElementById('view-recent-activity').addEventListener('click', function() {
+                            loadActivity(activity);
+                        });
+                    });
+                }
+            }
+            
+            function showNotification(message, type) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 ${type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`;
+                notification.innerHTML = `
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium">${message}</p>
+                        </div>
+                        <div class="ml-auto pl-3">
+                            <div class="-mx-1.5 -my-1.5">
+                                <button class="inline-flex rounded-md p-1.5 ${type === 'success' ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-red-50 text-red-500 hover:bg-red-100'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <span class="sr-only">Dismiss</span>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Auto dismiss after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+                
+                // Dismiss on click
+                notification.querySelector('button').addEventListener('click', function() {
+                    notification.remove();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

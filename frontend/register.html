@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - College Club Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="animated-bg min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md fade-in">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-600">College Club Management</h1>
+            <p class="text-gray-600 mt-2">Create a new account to get started.</p>
+        </div>
+        
+        <form id="registerForm" class="space-y-6">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <div class="mt-1">
+                    <input id="name" name="name" type="text" required 
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <div class="mt-1">
+                    <input id="email" name="email" type="email" required 
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="mt-1">
+                    <input id="password" name="password" type="password" required 
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                <div class="mt-1">
+                    <input id="confirmPassword" name="confirmPassword" type="password" required 
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="studentId" class="block text-sm font-medium text-gray-700">Student ID</label>
+                <div class="mt-1">
+                    <input id="studentId" name="studentId" type="text" required 
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="major" class="block text-sm font-medium text-gray-700">Major</label>
+                <div class="mt-1">
+                    <input id="major" name="major" type="text" required 
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" 
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pulse">
+                    Sign up
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">
+                Already have an account? 
+                <a href="index.html" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Sign in
+                </a>
+            </p>
+        </div>
+
+        <div id="notification" class="mt-4 hidden"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerForm = document.getElementById('registerForm');
+            const notification = document.getElementById('notification');
+            
+            registerForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const studentId = document.getElementById('studentId').value;
+                const major = document.getElementById('major').value;
+                
+                // Validate passwords match
+                if (password !== confirmPassword) {
+                    showNotification('Passwords do not match', 'error');
+                    return;
+                }
+                
+                try {
+                    const response = await axios.post('/api/auth/register', {
+                        name,
+                        email,
+                        password,
+                        studentId,
+                        major
+                    });
+                    
+                    // Show success notification
+                    showNotification('Registration successful! Please check your email to verify your account.', 'success');
+                    
+                    // Redirect to login page
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 3000);
+                    
+                } catch (error) {
+                    const message = error.response && error.response.data && error.response.data.message 
+                        ? error.response.data.message 
+                        : 'Registration failed. Please try again.';
+                    showNotification(message, 'error');
+                }
+            });
+            
+            function showNotification(message, type) {
+                notification.textContent = message;
+                notification.className = `mt-4 p-3 rounded-md text-sm ${type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+                notification.classList.remove('hidden');
+                
+                // Hide notification after 5 seconds
+                setTimeout(() => {
+                    notification.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

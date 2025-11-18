@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - College Club Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="animated-bg">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-indigo-600 font-bold text-xl">College Club Management</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="clubs.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Clubs
+                        </a>
+                        <a href="events.html" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Events
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div class="ml-3 relative">
+                        <div>
+                            <button id="user-menu-button" type="button" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full" src="https://picsum.photos/seed/user123/40/40.jpg" alt="User profile">
+                            </button>
+                        </div>
+                        <div id="user-menu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+                            <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="dashboard.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
+                <a href="clubs.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Clubs</a>
+                <a href="events.html" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Events</a>
+                <a href="profile.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Profile</a>
+                <a href="#" id="logout-btn-mobile" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Sign out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <!-- Header -->
+            <div class="md:flex md:items-center md:justify-between mb-6">
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+                        College Events
+                    </h2>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4">
+                    <button id="create-event-btn" type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pulse">
+                        <i class="fas fa-plus -ml-1 mr-2 h-5 w-5"></i>
+                        Create Event
+                    </button>
+                </div>
+            </div>
+
+            <!-- Event Filters -->
+            <div class="bg-white shadow rounded-lg mb-6 p-4 slide-up">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                    <div>
+                        <label for="search" class="block text-sm font-medium text-gray-700">Search events</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                            <input type="text" id="search" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md" placeholder="Search by title or description">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="club" class="block text-sm font-medium text-gray-700">Club</label>
+                        <select id="club" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="">All Clubs</option>
+                            <!-- Club options will be dynamically added here -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="date-filter" class="block text-sm font-medium text-gray-700">Date</label>
+                        <select id="date-filter" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="">All Dates</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events List -->
+            <div id="events-container" class="bg-white shadow overflow-hidden sm:rounded-lg slide-up">
+                <div class="px-4 py-5 sm:p-6 text-center">
+                    <i class="fas fa-spinner fa-spin text-indigo-600 text-3xl mb-3"></i>
+                    <p class="text-gray-600">Loading events...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div id="create-event-modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <form id="create-event-form">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Create New Event
+                                </h3>
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="event-title" class="block text-sm font-medium text-gray-700">Event Title</label>
+                                        <input type="text" id="event-title" name="title" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="event-description" class="block text-sm font-medium text-gray-700">Description</label>
+                                        <textarea id="event-description" name="description" rows="3" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="event-club" class="block text-sm font-medium text-gray-700">Club</label>
+                                        <select id="event-club" name="clubId" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                            <option value="">Select a club</option>
+                                            <!-- Club options will be dynamically added here -->
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="event-date" class="block text-sm font-medium text-gray-700">Date</label>
+                                        <input type="date" id="event-date" name="date" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="event-time" class="block text-sm font-medium text-gray-700">Time</label>
+                                        <input type="time" id="event-time" name="time" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="event-location" class="block text-sm font-medium text-gray-700">Location</label>
+                                        <input type="text" id="event-location" name="location" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Create
+                        </button>
+                        <button type="button" id="cancel-create-event" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Setup mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Setup user menu toggle
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            
+            userMenuButton.addEventListener('click', function() {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Close menus when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+                
+                if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+            
+            // Setup logout buttons
+            document.getElementById('logout-btn').addEventListener('click', logout);
+            document.getElementById('logout-btn-mobile').addEventListener('click', logout);
+            
+            function logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+            
+            // Setup create event modal
+            const createEventBtn = document.getElementById('create-event-btn');
+            const createEventModal = document.getElementById('create-event-modal');
+            const cancelCreateEvent = document.getElementById('cancel-create-event');
+            const createEventForm = document.getElementById('create-event-form');
+            
+            createEventBtn.addEventListener('click', async function() {
+                // Load user's clubs for the dropdown
+                try {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    const clubsResponse = await axios.get('/api/clubs/user');
+                    const clubs = clubsResponse.data;
+                    
+                    const eventClubSelect = document.getElementById('event-club');
+                    eventClubSelect.innerHTML = '<option value="">Select a club</option>';
+                    
+                    clubs.forEach(club => {
+                        const option = document.createElement('option');
+                        option.value = club._id;
+                        option.textContent = club.name;
+                        eventClubSelect.appendChild(option);
+                    });
+                    
+                    createEventModal.classList.remove('hidden');
+                } catch (error) {
+                    console.error('Error loading user clubs:', error);
+                    showNotification('Failed to load your clubs. Please try again.', 'error');
+                }
+            });
+            
+            cancelCreateEvent.addEventListener('click', function() {
+                createEventModal.classList.add('hidden');
+                createEventForm.reset();
+            });
+            
+            // Handle create event form submission
+            createEventForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const eventData = {
+                    title: document.getElementById('event-title').value,
+                    description: document.getElementById('event-description').value,
+                    clubId: document.getElementById('event-club').value,
+                    date: document.getElementById('event-date').value,
+                    time: document.getElementById('event-time').value,
+                    location: document.getElementById('event-location').value
+                };
+                
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.post('/api/events', eventData);
+                    
+                    // Close modal and reset form
+                    createEventModal.classList.add('hidden');
+                    createEventForm.reset();
+                    
+                    // Reload events list
+                    loadEvents();
+                    
+                    // Show success notification
+                    showNotification('Event created successfully!', 'success');
+                    
+                } catch (error) {
+                    const message = error.response && error.response.data && error.response.data.message 
+                        ? error.response.data.message 
+                        : 'Failed to create event. Please try again.';
+                    showNotification(message, 'error');
+                }
+            });
+            
+            // Setup search and filter
+            const searchInput = document.getElementById('search');
+            const clubSelect = document.getElementById('club');
+            const dateFilterSelect = document.getElementById('date-filter');
+            
+            searchInput.addEventListener('input', debounce(filterEvents, 300));
+            clubSelect.addEventListener('change', filterEvents);
+            dateFilterSelect.addEventListener('change', filterEvents);
+            
+            function debounce(func, wait) {
+                let timeout;
+                return function(...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), wait);
+                };
+            }
+            
+            // Load events data
+            loadEvents();
+            loadClubsForFilter();
+            
+            async function loadEvents() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.get('/api/events');
+                    const events = response.data;
+                    
+                    // Store events for filtering
+                    window.allEvents = events;
+                    
+                    // Display events
+                    displayEvents(events);
+                    
+                } catch (error) {
+                    console.error('Error loading events:', error);
+                    
+                    // If unauthorized, redirect to login
+                    if (error.response && error.response.status === 401) {
+                        logout();
+                    } else {
+                        // Show error message
+                        const eventsContainer = document.getElementById('events-container');
+                        eventsContainer.innerHTML = `
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <i class="fas fa-exclamation-circle text-red-600 text-3xl mb-3"></i>
+                                <p class="text-gray-600">Failed to load events. Please try again later.</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            
+            async function loadClubsForFilter() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.get('/api/clubs');
+                    const clubs = response.data;
+                    
+                    // Populate club filter dropdown
+                    const clubSelect = document.getElementById('club');
+                    clubSelect.innerHTML = '<option value="">All Clubs</option>';
+                    
+                    clubs.forEach(club => {
+                        const option = document.createElement('option');
+                        option.value = club._id;
+                        option.textContent = club.name;
+                        clubSelect.appendChild(option);
+                    });
+                    
+                } catch (error) {
+                    console.error('Error loading clubs for filter:', error);
+                }
+            }
+            
+            function displayEvents(events) {
+                const eventsContainer = document.getElementById('events-container');
+                
+                if (events.length === 0) {
+                    eventsContainer.innerHTML = `
+                        <div class="px-4 py-5 sm:p-6 text-center">
+                            <i class="fas fa-calendar-times text-gray-400 text-3xl mb-3"></i>
+                            <p class="text-gray-600">No events found. Try changing your search or filter criteria.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                eventsContainer.innerHTML = `
+                    <ul class="divide-y divide-gray-200">
+                        ${events.map(event => {
+                            const eventDate = new Date(event.date);
+                            const formattedDate = eventDate.toLocaleDateString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                            
+                            const isPast = eventDate < new Date();
+                            
+                            return `
+                                <li class="px-4 py-4 sm:px-6 hover:bg-gray-50 cursor-pointer ${isPast ? 'opacity-75' : ''}" onclick="window.location.href='events.html?id=${event._id}'">
+                                    <div class="flex items-center justify-between">
+                                        <div class="truncate">
+                                            <div class="flex text-sm">
+                                                <p class="font-medium text-indigo-600 truncate">${event.title}</p>
+                                                ${isPast ? '<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">Past Event</span>' : ''}
+                                            </div>
+                                            <div class="mt-2 flex">
+                                                <div class="flex items-center text-sm text-gray-500">
+                                                    <i class="fas fa-users mr-1.5"></i>
+                                                    <p>${event.clubName}</p>
+                                                </div>
+                                            </div>
+                                            <div class="mt-1 flex items-center text-sm text-gray-500">
+                                                <i class="fas fa-calendar-alt mr-1.5"></i>
+                                                <p>${formattedDate} at ${event.time}</p>
+                                            </div>
+                                            <div class="mt-1 flex items-center text-sm text-gray-500">
+                                                <i class="fas fa-map-marker-alt mr-1.5"></i>
+                                                <p>${event.location}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-chevron-right text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </li>
+                            `;
+                        }).join('')}
+                    </ul>
+                `;
+            }
+            
+            function filterEvents() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedClub = clubSelect.value;
+                const selectedDateFilter = dateFilterSelect.value;
+                
+                if (!window.allEvents) return;
+                
+                let filteredEvents = window.allEvents;
+                
+                // Apply search filter
+                if (searchTerm) {
+                    filteredEvents = filteredEvents.filter(event => 
+                        event.title.toLowerCase().includes(searchTerm) || 
+                        event.description.toLowerCase().includes(searchTerm)
+                    );
+                }
+                
+                // Apply club filter
+                if (selectedClub) {
+                    filteredEvents = filteredEvents.filter(event => event.clubId === selectedClub);
+                }
+                
+                // Apply date filter
+                if (selectedDateFilter) {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    filteredEvents = filteredEvents.filter(event => {
+                        const eventDate = new Date(event.date);
+                        
+                        switch(selectedDateFilter) {
+                            case 'today':
+                                return eventDate.toDateString() === today.toDateString();
+                            case 'week':
+                                const weekFromNow = new Date(today);
+                                weekFromNow.setDate(weekFromNow.getDate() + 7);
+                                return eventDate >= today && eventDate <= weekFromNow;
+                            case 'month':
+                                const monthFromNow = new Date(today);
+                                monthFromNow.setMonth(monthFromNow.getMonth() + 1);
+                                return eventDate >= today && eventDate <= monthFromNow;
+                            default:
+                                return true;
+                        }
+                    });
+                }
+                
+                displayEvents(filteredEvents);
+            }
+            
+            function showNotification(message, type) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 ${type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`;
+                notification.innerHTML = `
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium">${message}</p>
+                        </div>
+                        <div class="ml-auto pl-3">
+                            <div class="-mx-1.5 -my-1.5">
+                                <button class="inline-flex rounded-md p-1.5 ${type === 'success' ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-red-50 text-red-500 hover:bg-red-100'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <span class="sr-only">Dismiss</span>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Auto dismiss after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+                
+                // Dismiss on click
+                notification.querySelector('button').addEventListener('click', function() {
+                    notification.remove();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

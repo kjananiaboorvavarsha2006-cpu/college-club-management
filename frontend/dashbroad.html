@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - College Club Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="animated-bg">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-indigo-600 font-bold text-xl">College Club Management</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="dashboard.html" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="clubs.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Clubs
+                        </a>
+                        <a href="events.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Events
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div class="ml-3 relative">
+                        <div>
+                            <button id="user-menu-button" type="button" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full" src="https://picsum.photos/seed/user123/40/40.jpg" alt="User profile">
+                            </button>
+                        </div>
+                        <div id="user-menu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+                            <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="dashboard.html" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
+                <a href="clubs.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Clubs</a>
+                <a href="events.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Events</a>
+                <a href="profile.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Profile</a>
+                <a href="#" id="logout-btn-mobile" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Sign out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <!-- Welcome Section -->
+            <div class="bg-white overflow-hidden shadow rounded-lg mb-6 slide-up">
+                <div class="px-4 py-5 sm:p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome back, <span id="user-name">User</span>!</h2>
+                    <p class="text-gray-600">Here's what's happening with your clubs and events today.</p>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+                <div class="bg-white overflow-hidden shadow rounded-lg slide-up">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-indigo-100 rounded-md p-3">
+                                <i class="fas fa-users text-indigo-600 text-xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Your Clubs</dt>
+                                    <dd class="flex items-baseline">
+                                        <div class="text-2xl font-semibold text-gray-900" id="user-clubs-count">0</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg slide-up">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-green-100 rounded-md p-3">
+                                <i class="fas fa-calendar-alt text-green-600 text-xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Upcoming Events</dt>
+                                    <dd class="flex items-baseline">
+                                        <div class="text-2xl font-semibold text-gray-900" id="upcoming-events-count">0</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg slide-up">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-yellow-100 rounded-md p-3">
+                                <i class="fas fa-fire text-yellow-600 text-xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Current Streak</dt>
+                                    <dd class="flex items-baseline">
+                                        <div class="text-2xl font-semibold text-gray-900" id="current-streak">0</div>
+                                        <span class="ml-2 text-sm text-gray-500">days</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow rounded-lg slide-up">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 bg-purple-100 rounded-md p-3">
+                                <i class="fas fa-trophy text-purple-600 text-xl"></i>
+                            </div>
+                            <div class="ml-5 w-0 flex-1">
+                                <dl>
+                                    <dt class="text-sm font-medium text-gray-500 truncate">Badges Earned</dt>
+                                    <dd class="flex items-baseline">
+                                        <div class="text-2xl font-semibold text-gray-900" id="badges-count">0</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity and Upcoming Events -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Recent Activity -->
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg slide-up">
+                    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Activity</h3>
+                    </div>
+                    <div class="bg-white">
+                        <ul id="recent-activity" class="divide-y divide-gray-200">
+                            <!-- Activity items will be dynamically added here -->
+                            <li class="px-4 py-4 sm:px-6">
+                                <div class="flex items-center">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-indigo-600 truncate">No recent activity</p>
+                                        <p class="mt-1 text-sm text-gray-500">Join clubs or events to see activity here</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg slide-up">
+                    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Upcoming Events</h3>
+                    </div>
+                    <div class="bg-white">
+                        <ul id="upcoming-events" class="divide-y divide-gray-200">
+                            <!-- Event items will be dynamically added here -->
+                            <li class="px-4 py-4 sm:px-6">
+                                <div class="flex items-center">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-indigo-600 truncate">No upcoming events</p>
+                                        <p class="mt-1 text-sm text-gray-500">Check back later for new events</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Set user name in welcome message
+            document.getElementById('user-name').textContent = user.name || 'User';
+            
+            // Setup mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Setup user menu toggle
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            
+            userMenuButton.addEventListener('click', function() {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Close menus when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+                
+                if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+            
+            // Setup logout buttons
+            document.getElementById('logout-btn').addEventListener('click', logout);
+            document.getElementById('logout-btn-mobile').addEventListener('click', logout);
+            
+            function logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+            
+            // Load dashboard data
+            loadDashboardData();
+            
+            async function loadDashboardData() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    // Load user profile data
+                    const profileResponse = await axios.get('/api/profile');
+                    const profileData = profileResponse.data;
+                    
+                    // Update stats
+                    document.getElementById('user-clubs-count').textContent = profileData.clubsCount || 0;
+                    document.getElementById('current-streak').textContent = profileData.currentStreak || 0;
+                    document.getElementById('badges-count').textContent = profileData.badgesCount || 0;
+                    
+                    // Load upcoming events
+                    const eventsResponse = await axios.get('/api/events/upcoming');
+                    const eventsData = eventsResponse.data;
+                    
+                    document.getElementById('upcoming-events-count').textContent = eventsData.length || 0;
+                    
+                    // Populate upcoming events list
+                    const upcomingEventsList = document.getElementById('upcoming-events');
+                    upcomingEventsList.innerHTML = '';
+                    
+                    if (eventsData.length === 0) {
+                        upcomingEventsList.innerHTML = `
+                            <li class="px-4 py-4 sm:px-6">
+                                <div class="flex items-center">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-indigo-600 truncate">No upcoming events</p>
+                                        <p class="mt-1 text-sm text-gray-500">Check back later for new events</p>
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                    } else {
+                        eventsData.forEach(event => {
+                            const eventDate = new Date(event.date);
+                            const formattedDate = eventDate.toLocaleDateString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                            
+                            upcomingEventsList.innerHTML += `
+                                <li class="px-4 py-4 sm:px-6 hover:bg-gray-50 cursor-pointer" onclick="window.location.href='events.html'">
+                                    <div class="flex items-center">
+                                        <div class="min-w-0 flex-1">
+                                            <p class="text-sm font-medium text-indigo-600 truncate">${event.title}</p>
+                                            <p class="mt-1 text-sm text-gray-500">${event.clubName} • ${formattedDate}</p>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-chevron-right text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </li>
+                            `;
+                        });
+                    }
+                    
+                    // Load recent activity
+                    const activityResponse = await axios.get('/api/profile/activity');
+                    const activityData = activityResponse.data;
+                    
+                    // Populate recent activity list
+                    const recentActivityList = document.getElementById('recent-activity');
+                    recentActivityList.innerHTML = '';
+                    
+                    if (activityData.length === 0) {
+                        recentActivityList.innerHTML = `
+                            <li class="px-4 py-4 sm:px-6">
+                                <div class="flex items-center">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-indigo-600 truncate">No recent activity</p>
+                                        <p class="mt-1 text-sm text-gray-500">Join clubs or events to see activity here</p>
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                    } else {
+                        activityData.forEach(activity => {
+                            const activityDate = new Date(activity.date);
+                            const formattedDate = activityDate.toLocaleDateString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                            
+                            let icon = '';
+                            let color = '';
+                            
+                            if (activity.type === 'joined_club') {
+                                icon = 'fa-user-plus';
+                                color = 'text-green-600';
+                            } else if (activity.type === 'left_club') {
+                                icon = 'fa-user-minus';
+                                color = 'text-red-600';
+                            } else if (activity.type === 'joined_event') {
+                                icon = 'fa-calendar-check';
+                                color = 'text-blue-600';
+                            } else if (activity.type === 'earned_badge') {
+                                icon = 'fa-trophy';
+                                color = 'text-yellow-600';
+                            }
+                            
+                            recentActivityList.innerHTML += `
+                                <li class="px-4 py-4 sm:px-6">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas ${icon} ${color}"></i>
+                                        </div>
+                                        <div class="min-w-0 flex-1 ml-3">
+                                            <p class="text-sm font-medium text-gray-900 truncate">${activity.description}</p>
+                                            <p class="mt-1 text-sm text-gray-500">${formattedDate}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            `;
+                        });
+                    }
+                    
+                } catch (error) {
+                    console.error('Error loading dashboard data:', error);
+                    
+                    // If unauthorized, redirect to login
+                    if (error.response && error.response.status === 401) {
+                        logout();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

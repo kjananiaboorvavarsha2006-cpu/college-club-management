@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Details - College Club Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="animated-bg">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-indigo-600 font-bold text-xl">College Club Management</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="dashboard.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="clubs.html" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Clubs
+                        </a>
+                        <a href="events.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Events
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div class="ml-3 relative">
+                        <div>
+                            <button id="user-menu-button" type="button" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full" src="https://picsum.photos/seed/user123/40/40.jpg" alt="User profile">
+                            </button>
+                        </div>
+                        <div id="user-menu" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+                            <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="dashboard.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
+                <a href="clubs.html" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Clubs</a>
+                <a href="events.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Events</a>
+                <a href="profile.html" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Profile</a>
+                <a href="#" id="logout-btn-mobile" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Sign out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <!-- Back button -->
+            <div class="mb-6">
+                <a href="clubs.html" class="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Clubs
+                </a>
+            </div>
+
+            <!-- Club Details -->
+            <div id="club-details-container">
+                <div class="bg-white shadow rounded-lg p-6 text-center">
+                    <i class="fas fa-spinner fa-spin text-indigo-600 text-3xl mb-3"></i>
+                    <p class="text-gray-600">Loading club details...</p>
+                </div>
+            </div>
+
+            <!-- Club Events Section -->
+            <div class="mt-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-900">Upcoming Events</h2>
+                    <button id="create-event-btn" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 pulse">
+                        <i class="fas fa-plus -ml-1 mr-1 h-4 w-4"></i>
+                        Create Event
+                    </button>
+                </div>
+                
+                <div id="club-events-container" class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:p-6 text-center">
+                        <i class="fas fa-spinner fa-spin text-indigo-600 text-3xl mb-3"></i>
+                        <p class="text-gray-600">Loading events...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Club Members Section -->
+            <div class="mt-8">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Club Members</h2>
+                
+                <div id="club-members-container" class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:p-6 text-center">
+                        <i class="fas fa-spinner fa-spin text-indigo-600 text-3xl mb-3"></i>
+                        <p class="text-gray-600">Loading members...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Club Gallery Section -->
+            <div class="mt-8">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Club Gallery</h2>
+                
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                            <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden">
+                                <img src="https://picsum.photos/seed/club1/300/300.jpg" alt="Club activity" class="w-full h-full object-cover">
+                            </div>
+                            <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden">
+                                <img src="https://picsum.photos/seed/club2/300/300.jpg" alt="Club activity" class="w-full h-full object-cover">
+                            </div>
+                            <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden">
+                                <img src="https://picsum.photos/seed/club3/300/300.jpg" alt="Club activity" class="w-full h-full object-cover">
+                            </div>
+                            <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden">
+                                <img src="https://picsum.photos/seed/club4/300/300.jpg" alt="Club activity" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div id="create-event-modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <form id="create-event-form">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Create New Event
+                                </h3>
+                                <div class="mt-4 space-y-4">
+                                    <div>
+                                        <label for="event-title" class="block text-sm font-medium text-gray-700">Event Title</label>
+                                        <input type="text" id="event-title" name="title" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="event-description" class="block text-sm font-medium text-gray-700">Description</label>
+                                        <textarea id="event-description" name="description" rows="3" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="event-date" class="block text-sm font-medium text-gray-700">Date</label>
+                                        <input type="date" id="event-date" name="date" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="event-time" class="block text-sm font-medium text-gray-700">Time</label>
+                                        <input type="time" id="event-time" name="time" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <div>
+                                        <label for="event-location" class="block text-sm font-medium text-gray-700">Location</label>
+                                        <input type="text" id="event-location" name="location" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                    <input type="hidden" id="event-club-id" name="clubId">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Create
+                        </button>
+                        <button type="button" id="cancel-create-event" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Get club ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const clubId = urlParams.get('id');
+            
+            if (!clubId) {
+                window.location.href = 'clubs.html';
+                return;
+            }
+            
+            // Setup mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Setup user menu toggle
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenu = document.getElementById('user-menu');
+            
+            userMenuButton.addEventListener('click', function() {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Close menus when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+                
+                if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+            
+            // Setup logout buttons
+            document.getElementById('logout-btn').addEventListener('click', logout);
+            document.getElementById('logout-btn-mobile').addEventListener('click', logout);
+            
+            function logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+            
+            // Setup create event modal
+            const createEventBtn = document.getElementById('create-event-btn');
+            const createEventModal = document.getElementById('create-event-modal');
+            const cancelCreateEvent = document.getElementById('cancel-create-event');
+            const createEventForm = document.getElementById('create-event-form');
+            
+            createEventBtn.addEventListener('click', function() {
+                document.getElementById('event-club-id').value = clubId;
+                createEventModal.classList.remove('hidden');
+            });
+            
+            cancelCreateEvent.addEventListener('click', function() {
+                createEventModal.classList.add('hidden');
+                createEventForm.reset();
+            });
+            
+            // Handle create event form submission
+            createEventForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const eventData = {
+                    title: document.getElementById('event-title').value,
+                    description: document.getElementById('event-description').value,
+                    date: document.getElementById('event-date').value,
+                    time: document.getElementById('event-time').value,
+                    location: document.getElementById('event-location').value,
+                    clubId: document.getElementById('event-club-id').value
+                };
+                
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.post('/api/events', eventData);
+                    
+                    // Close modal and reset form
+                    createEventModal.classList.add('hidden');
+                    createEventForm.reset();
+                    
+                    // Reload events list
+                    loadClubEvents();
+                    
+                    // Show success notification
+                    showNotification('Event created successfully!', 'success');
+                    
+                } catch (error) {
+                    const message = error.response && error.response.data && error.response.data.message 
+                        ? error.response.data.message 
+                        : 'Failed to create event. Please try again.';
+                    showNotification(message, 'error');
+                }
+            });
+            
+            // Load club details
+            loadClubDetails();
+            
+            async function loadClubDetails() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.get(`/api/clubs/${clubId}`);
+                    const club = response.data;
+                    
+                    // Check if user is a member
+                    const isMember = club.members && club.members.includes(user._id);
+                    const memberCount = club.members ? club.members.length : 0;
+                    
+                    // Get category icon
+                    let categoryIcon = '';
+                    switch(club.category) {
+                        case 'academic':
+                            categoryIcon = 'fa-book';
+                            break;
+                        case 'arts':
+                            categoryIcon = 'fa-palette';
+                            break;
+                        case 'sports':
+                            categoryIcon = 'fa-running';
+                            break;
+                        case 'technology':
+                            categoryIcon = 'fa-laptop-code';
+                            break;
+                        case 'social':
+                            categoryIcon = 'fa-users';
+                            break;
+                        case 'volunteer':
+                            categoryIcon = 'fa-hands-helping';
+                            break;
+                        default:
+                            categoryIcon = 'fa-users';
+                    }
+                    
+                    // Display club details
+                    const clubDetailsContainer = document.getElementById('club-details-container');
+                    clubDetailsContainer.innerHTML = `
+                        <div class="bg-white shadow rounded-lg overflow-hidden slide-up">
+                            <div class="h-64 bg-gray-200 flex items-center justify-center">
+                                <img src="https://picsum.photos/seed/${club._id}/800/400.jpg" alt="${club.name}" class="h-full w-full object-cover">
+                            </div>
+                            <div class="px-6 py-5">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                    <div>
+                                        <div class="flex items-center">
+                                            <h1 class="text-2xl font-bold text-gray-900">${club.name}</h1>
+                                            <span class="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                                <i class="fas ${categoryIcon} mr-1"></i>
+                                                ${club.category.charAt(0).toUpperCase() + club.category.slice(1)}
+                                            </span>
+                                        </div>
+                                        <p class="mt-2 text-gray-600">${club.description}</p>
+                                    </div>
+                                    <div class="mt-4 md:mt-0">
+                                        <button id="join-leave-btn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white ${isMember ? 'bg-red-600 hover:bg-red-700' : 'bg-indigo-600 hover:bg-indigo-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            ${isMember ? 'Leave Club' : 'Join Club'}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                                    <div class="bg-gray-50 overflow-hidden shadow rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 bg-indigo-100 rounded-md p-3">
+                                                    <i class="fas fa-users text-indigo-600"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="text-sm font-medium text-gray-500 truncate">Members</dt>
+                                                        <dd class="text-lg font-semibold text-gray-900">${memberCount}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 overflow-hidden shadow rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 bg-green-100 rounded-md p-3">
+                                                    <i class="fas fa-calendar-alt text-green-600"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="text-sm font-medium text-gray-500 truncate">Events</dt>
+                                                        <dd class="text-lg font-semibold text-gray-900" id="club-events-count">0</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 overflow-hidden shadow rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 bg-yellow-100 rounded-md p-3">
+                                                    <i class="fas fa-star text-yellow-600"></i>
+                                                </div>
+                                                <div class="ml-5 w-0 flex-1">
+                                                    <dl>
+                                                        <dt class="text-sm font-medium text-gray-500 truncate">Founded</dt>
+                                                        <dd class="text-lg font-semibold text-gray-900">${new Date(club.createdAt).toLocaleDateString()}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add event listener to join/leave button
+                    const joinLeaveBtn = document.getElementById('join-leave-btn');
+                    joinLeaveBtn.addEventListener('click', async function() {
+                        try {
+                            // Set authorization header
+                            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                            
+                            if (isMember) {
+                                // Leave club
+                                await axios.post(`/api/memberships/leave/${clubId}`);
+                                showNotification(`You have left ${club.name}`, 'success');
+                            } else {
+                                // Join club
+                                await axios.post(`/api/memberships/join/${clubId}`);
+                                showNotification(`You have joined ${club.name}`, 'success');
+                            }
+                            
+                            // Reload club details to update UI
+                            loadClubDetails();
+                            
+                        } catch (error) {
+                            const message = error.response && error.response.data && error.response.data.message 
+                                ? error.response.data.message 
+                                : `Failed to ${isMember ? 'leave' : 'join'} club. Please try again.`;
+                            showNotification(message, 'error');
+                        }
+                    });
+                    
+                    // Load club events and members
+                    loadClubEvents();
+                    loadClubMembers();
+                    
+                } catch (error) {
+                    console.error('Error loading club details:', error);
+                    
+                    // If unauthorized, redirect to login
+                    if (error.response && error.response.status === 401) {
+                        logout();
+                    } else {
+                        // Show error message
+                        const clubDetailsContainer = document.getElementById('club-details-container');
+                        clubDetailsContainer.innerHTML = `
+                            <div class="bg-white shadow rounded-lg p-6 text-center">
+                                <i class="fas fa-exclamation-circle text-red-600 text-3xl mb-3"></i>
+                                <p class="text-gray-600">Failed to load club details. Please try again later.</p>
+                                <div class="mt-4">
+                                    <a href="clubs.html" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Back to Clubs
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            
+            async function loadClubEvents() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.get(`/api/events/club/${clubId}`);
+                    const events = response.data;
+                    
+                    // Update events count
+                    document.getElementById('club-events-count').textContent = events.length;
+                    
+                    // Display events
+                    const clubEventsContainer = document.getElementById('club-events-container');
+                    
+                    if (events.length === 0) {
+                        clubEventsContainer.innerHTML = `
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <i class="fas fa-calendar-times text-gray-400 text-3xl mb-3"></i>
+                                <p class="text-gray-600">No upcoming events for this club.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Filter upcoming events
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    const upcomingEvents = events.filter(event => new Date(event.date) >= today);
+                    
+                    if (upcomingEvents.length === 0) {
+                        clubEventsContainer.innerHTML = `
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <i class="fas fa-calendar-times text-gray-400 text-3xl mb-3"></i>
+                                <p class="text-gray-600">No upcoming events for this club.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    clubEventsContainer.innerHTML = `
+                        <ul class="divide-y divide-gray-200">
+                            ${upcomingEvents.map(event => {
+                                const eventDate = new Date(event.date);
+                                const formattedDate = eventDate.toLocaleDateString('en-US', { 
+                                    month: 'short', 
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                });
+                                
+                                return `
+                                    <li class="px-4 py-4 sm:px-6 hover:bg-gray-50 cursor-pointer" onclick="window.location.href='events.html?id=${event._id}'">
+                                        <div class="flex items-center justify-between">
+                                            <div class="min-w-0 flex-1">
+                                                <p class="text-sm font-medium text-indigo-600 truncate">${event.title}</p>
+                                                <p class="mt-1 text-sm text-gray-500">${formattedDate} at ${event.time}</p>
+                                                <p class="mt-1 text-sm text-gray-500">
+                                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                                    ${event.location}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-chevron-right text-gray-400"></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                `;
+                            }).join('')}
+                        </ul>
+                    `;
+                    
+                } catch (error) {
+                    console.error('Error loading club events:', error);
+                    
+                    // If unauthorized, redirect to login
+                    if (error.response && error.response.status === 401) {
+                        logout();
+                    } else {
+                        // Show error message
+                        const clubEventsContainer = document.getElementById('club-events-container');
+                        clubEventsContainer.innerHTML = `
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <i class="fas fa-exclamation-circle text-red-600 text-3xl mb-3"></i>
+                                <p class="text-gray-600">Failed to load events. Please try again later.</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            
+            async function loadClubMembers() {
+                try {
+                    // Set authorization header
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    
+                    const response = await axios.get(`/api/clubs/${clubId}/members`);
+                    const members = response.data;
+                    
+                    // Display members
+                    const clubMembersContainer = document.getElementById('club-members-container');
+                    
+                    if (members.length === 0) {
+                        clubMembersContainer.innerHTML = `
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <i class="fas fa-user-friends text-gray-400 text-3xl mb-3"></i>
+                                <p class="text-gray-600">No members in this club yet.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    clubMembersContainer.innerHTML = `
+                        <ul class="divide-y divide-gray-200">
+                            ${members.map(member => `
+                                <li class="px-4 py-4 sm:px-6">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://picsum.photos/seed/${member._id}/40/40.jpg" alt="${member.name}">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">${member.name}</div>
+                                            <div class="text-sm text-gray-500">${member.major}</div>
+                                        </div>
+                                        ${member._id === clubId ? `
+                                            <div class="ml-auto">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                    <i class="fas fa-crown mr-1"></i>
+                                                    Creator
+                                                </span>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    
+                } catch (error) {
+                    console.error('Error loading club members:', error);
+                    
+                    // If unauthorized, redirect to login
+                    if (error.response && error.response.status === 401) {
+                        logout();
+                    } else {
+                        // Show error message
+                        const clubMembersContainer = document.getElementById('club-members-container');
+                        clubMembersContainer.innerHTML = `
+                            <div class="px-4 py-5 sm:p-6 text-center">
+                                <i class="fas fa-exclamation-circle text-red-600 text-3xl mb-3"></i>
+                                <p class="text-gray-600">Failed to load members. Please try again later.</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            
+            function showNotification(message, type) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 ${type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`;
+                notification.innerHTML = `
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium">${message}</p>
+                        </div>
+                        <div class="ml-auto pl-3">
+                            <div class="-mx-1.5 -my-1.5">
+                                <button class="inline-flex rounded-md p-1.5 ${type === 'success' ? 'bg-green-50 text-green-500 hover:bg-green-100' : 'bg-red-50 text-red-500 hover:bg-red-100'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <span class="sr-only">Dismiss</span>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Auto dismiss after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+                
+                // Dismiss on click
+                notification.querySelector('button').addEventListener('click', function() {
+                    notification.remove();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
